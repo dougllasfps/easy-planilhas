@@ -1,4 +1,4 @@
-package br.gov.ce.seduc.planilhas;
+package org.dougllas.planilhas;
 
 public enum ColumnHeaderTextAlignment {
 	LEFT,RIGHT,CENTER;

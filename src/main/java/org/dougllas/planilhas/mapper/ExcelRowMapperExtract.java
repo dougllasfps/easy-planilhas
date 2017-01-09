@@ -1,4 +1,4 @@
-package br.gov.ce.seduc.planilhas.mapper;
+package org.dougllas.planilhas.mapper;
 
 import java.util.ArrayList;
 import java.util.List;

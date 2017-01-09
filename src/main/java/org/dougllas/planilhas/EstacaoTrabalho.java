@@ -1,11 +1,11 @@
-package br.gov.ce.seduc.planilhas;
+package org.dougllas.planilhas;
 
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import br.gov.ce.seduc.planilhas.util.Util;
+import org.dougllas.planilhas.util.Util;
 
 public class EstacaoTrabalho {
 

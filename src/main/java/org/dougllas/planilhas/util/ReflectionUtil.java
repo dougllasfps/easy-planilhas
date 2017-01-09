@@ -1,4 +1,4 @@
-package br.gov.ce.seduc.planilhas.util;
+package org.dougllas.planilhas.util;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang.ArrayUtils;
+import org.dougllas.planilhas.annotation.ColunaPlanilha;
 import org.springframework.util.ReflectionUtils;
-
-import br.gov.ce.seduc.planilhas.annotation.ColunaPlanilha;
 
 public class ReflectionUtil {
 

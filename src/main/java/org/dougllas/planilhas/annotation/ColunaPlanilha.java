@@ -1,12 +1,12 @@
-package br.gov.ce.seduc.planilhas.annotation;
+package org.dougllas.planilhas.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import br.gov.ce.seduc.planilhas.CellTextAlignment;
-import br.gov.ce.seduc.planilhas.ColumnHeaderTextAlignment;
+import org.dougllas.planilhas.CellTextAlignment;
+import org.dougllas.planilhas.ColumnHeaderTextAlignment;
 
 /**
  * @author dougllas.sousa

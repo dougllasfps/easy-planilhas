@@ -1,4 +1,4 @@
-package br.gov.ce.seduc.planilhas.generator.helper;
+package org.dougllas.planilhas.generator.helper;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -25,10 +25,10 @@ import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.util.CellRangeAddress;
 
-import br.gov.ce.seduc.planilhas.annotation.ColunaPlanilha;
-import br.gov.ce.seduc.planilhas.mapper.ExcelRowMapper;
-import br.gov.ce.seduc.planilhas.mapper.ExcelRowMapperExtract;
-import br.gov.ce.seduc.planilhas.util.ReflectionUtil;
+import org.dougllas.planilhas.annotation.ColunaPlanilha;
+import org.dougllas.planilhas.mapper.ExcelRowMapper;
+import org.dougllas.planilhas.mapper.ExcelRowMapperExtract;
+import org.dougllas.planilhas.util.ReflectionUtil;
 
 /**
  * @author dougllas.sousa

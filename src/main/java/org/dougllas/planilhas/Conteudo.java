@@ -1,4 +1,4 @@
-package br.gov.ce.seduc.planilhas;
+package org.dougllas.planilhas;
 
 import java.util.Collection;
 

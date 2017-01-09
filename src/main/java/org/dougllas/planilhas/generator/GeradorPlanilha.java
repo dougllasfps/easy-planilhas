@@ -1,12 +1,12 @@
-package br.gov.ce.seduc.planilhas.generator;
+package org.dougllas.planilhas.generator;
 
 import java.io.IOException;
 import java.util.List;
 
-import br.gov.ce.seduc.planilhas.CabecalhoColunas;
-import br.gov.ce.seduc.planilhas.Planilha;
-import br.gov.ce.seduc.planilhas.Sumario;
-import br.gov.ce.seduc.planilhas.generator.helper.PlanilhaGeneratorHelper;
+import org.dougllas.planilhas.CabecalhoColunas;
+import org.dougllas.planilhas.Planilha;
+import org.dougllas.planilhas.Sumario;
+import org.dougllas.planilhas.generator.helper.PlanilhaGeneratorHelper;
 
 /**
  * @author dougllas.sousa

@@ -1,16 +1,9 @@
-package br.gov.ce.seduc.planilhas;
+package org.dougllas.planilhas;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.Arrays;
 import java.util.List;
 
-import br.gov.ce.seduc.planilhas.annotation.ColunaPlanilha;
-import br.gov.ce.seduc.planilhas.generator.GeradorPlanilha;
-import br.gov.ce.seduc.planilhas.util.ReflectionUtil;
-import br.gov.ce.seduc.planilhas.util.Util;
+import org.dougllas.planilhas.util.ReflectionUtil;
+import org.dougllas.planilhas.util.Util;
 
 public class Planilha {
 	

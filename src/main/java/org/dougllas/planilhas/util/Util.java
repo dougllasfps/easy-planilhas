@@ -1,4 +1,4 @@
-package br.gov.ce.seduc.planilhas.util;
+package org.dougllas.planilhas.util;
 
 public class Util {
 	public static void notNull(Object obj){
