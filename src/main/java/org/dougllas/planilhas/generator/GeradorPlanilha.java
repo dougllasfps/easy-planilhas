@@ -7,6 +7,7 @@ import org.dougllas.planilhas.CabecalhoColunas;
 import org.dougllas.planilhas.Planilha;
 import org.dougllas.planilhas.Sumario;
 import org.dougllas.planilhas.generator.helper.PlanilhaGeneratorHelper;
+import org.dougllas.planilhas.mapper.ExcelRowMapper;
 
 /**
  * @author dougllas.sousa
@@ -15,11 +16,15 @@ import org.dougllas.planilhas.generator.helper.PlanilhaGeneratorHelper;
 public class GeradorPlanilha {
 
 	public static byte[] exportToBytes(Planilha planilha) throws IOException{
-		PlanilhaGeneratorHelper helper = gerar(planilha);
-		return helper.exportToBytes();
+		return exportToBytes(planilha, null);
 	}
 
-	private static PlanilhaGeneratorHelper gerar(Planilha planilha) {
+    public static byte[] exportToBytes(Planilha planilha, ExcelRowMapper mapper) throws IOException{
+        PlanilhaGeneratorHelper helper = gerar(planilha, mapper);
+        return helper.exportToBytes();
+    }
+
+	private static PlanilhaGeneratorHelper gerar(Planilha planilha, ExcelRowMapper mapper) {
         if(planilha == null || planilha.getConteudo() == null || planilha.getConteudo().isEmpty()){
             throw new IllegalArgumentException("Planilha vazia.");
         }
@@ -35,7 +40,7 @@ public class GeradorPlanilha {
 			helper.setDatePattern(planilha.getDataPattern());
 		}
 		
-		helper.addList(planilha.getConteudo());
+		helper.addList(planilha.getConteudo(), mapper);
 		helper.setProtegerPlanilha(planilha.isReadOnly());
 		
 		return helper;
