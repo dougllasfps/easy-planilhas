@@ -296,11 +296,15 @@ public class PlanilhaGeneratorHelper {
 	 *  o mapeamento da linha de acordo com o objeto.
 	 */
 	public void addList(List<?> list, ExcelRowMapper rowMapper){
-		ExcelRowMapperExtract extract = new ExcelRowMapperExtract(rowMapper);
-		List<Object[]> objects = extract.extract(list);
-		for (Object[] obj : objects) {
-			adicionaLinha(obj);
-		}
+        if(rowMapper != null) {
+            ExcelRowMapperExtract extract = new ExcelRowMapperExtract(rowMapper);
+            List<Object[]> objects = extract.extract(list);
+            for (Object[] obj : objects) {
+                adicionaLinha(obj);
+            }
+        }else{
+            addList(list);
+        }
 	}
 	
 	/**

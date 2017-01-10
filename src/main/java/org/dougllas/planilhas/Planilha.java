@@ -2,6 +2,7 @@ package org.dougllas.planilhas;
 
 import java.util.List;
 
+import org.dougllas.planilhas.mapper.ExcelRowMapper;
 import org.dougllas.planilhas.util.ReflectionUtil;
 import org.dougllas.planilhas.util.Util;
 
@@ -13,6 +14,7 @@ public class Planilha {
 	private String 	titulo;
 	private CabecalhoColunas cabecalhoColunas = new CabecalhoColunas();
 	private List<?> conteudo;
+    private ExcelRowMapper mapper;
 	
 	private boolean readOnly;
 	

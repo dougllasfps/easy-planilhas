@@ -20,6 +20,10 @@ public class GeradorPlanilha {
 	}
 
 	private static PlanilhaGeneratorHelper gerar(Planilha planilha) {
+        if(planilha == null || planilha.getConteudo() == null || planilha.getConteudo().isEmpty()){
+            throw new IllegalArgumentException("Planilha vazia.");
+        }
+
 		PlanilhaGeneratorHelper helper = PlanilhaGeneratorHelper.createPlanilha(planilha.getName());
 		CabecalhoColunas cabecalhoColunas = planilha.getCabecalhoColunas();
 		
