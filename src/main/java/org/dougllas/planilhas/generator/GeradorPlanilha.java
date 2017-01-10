@@ -25,7 +25,7 @@ public class GeradorPlanilha {
     }
 
 	private static PlanilhaGeneratorHelper gerar(Planilha planilha, ExcelRowMapper mapper) {
-        if(planilha == null || planilha.getConteudo() == null || planilha.getConteudo().isEmpty()){
+        if(planilha == null || planilha.getConteudo() == null){
             throw new IllegalArgumentException("Planilha vazia.");
         }
 
@@ -39,8 +39,11 @@ public class GeradorPlanilha {
 		if(planilha.getDataPattern() != null){
 			helper.setDatePattern(planilha.getDataPattern());
 		}
-		
-		helper.addList(planilha.getConteudo(), mapper);
+
+        if(!planilha.getConteudo().isEmpty()) {
+            helper.addList(planilha.getConteudo(), mapper);
+        }
+
 		helper.setProtegerPlanilha(planilha.isReadOnly());
 		
 		return helper;
