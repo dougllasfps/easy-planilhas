@@ -11,6 +11,7 @@ public class SpreadSheet {
     private List<Column> columns;
     private List<Row> rows;
     private SpreadSheetConfig config;
+    private String description;
 
     public SpreadSheetConfig getConfig() {
         return config;
@@ -34,5 +35,13 @@ public class SpreadSheet {
 
     public void setRows(List<Row> rows) {
         this.rows = rows;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

@@ -6,7 +6,7 @@ import java.util.List;
 import org.dougllas.planilhas.CabecalhoColunas;
 import org.dougllas.planilhas.Planilha;
 import org.dougllas.planilhas.Sumario;
-import org.dougllas.planilhas.generator.helper.PlanilhaGeneratorHelper;
+import org.dougllas.planilhas.generator.helper.SpreadSheetGeneratorHelper;
 import org.dougllas.planilhas.mapper.ExcelRowMapper;
 
 /**
@@ -20,16 +20,16 @@ public class GeradorPlanilha {
 	}
 
     public static byte[] exportToBytes(Planilha planilha, ExcelRowMapper mapper) throws IOException{
-        PlanilhaGeneratorHelper helper = gerar(planilha, mapper);
+        SpreadSheetGeneratorHelper helper = gerar(planilha, mapper);
         return helper.exportToBytes();
     }
 
-	private static PlanilhaGeneratorHelper gerar(Planilha planilha, ExcelRowMapper mapper) {
+	private static SpreadSheetGeneratorHelper gerar(Planilha planilha, ExcelRowMapper mapper) {
         if(planilha == null || planilha.getConteudo() == null){
             throw new IllegalArgumentException("Planilha vazia.");
         }
 
-		PlanilhaGeneratorHelper helper = PlanilhaGeneratorHelper.createPlanilha(planilha.getName());
+		SpreadSheetGeneratorHelper helper = SpreadSheetGeneratorHelper.createPlanilha(planilha.getName());
 		CabecalhoColunas cabecalhoColunas = planilha.getCabecalhoColunas();
 		
 		configurarTitulo(planilha, helper);
@@ -49,7 +49,7 @@ public class GeradorPlanilha {
 		return helper;
 	}
 
-	private static void configurarTitulo(Planilha planilha, PlanilhaGeneratorHelper helper) {
+	private static void configurarTitulo(Planilha planilha, SpreadSheetGeneratorHelper helper) {
 		if(planilha.getTitulo() != null){
 			helper.adicionaLinha(planilha.getTitulo());
 			helper.adicionaLinhaEmBranco(2);
@@ -57,7 +57,7 @@ public class GeradorPlanilha {
 		}
 	}
 
-	private static void configuraSumario(Planilha planilha, PlanilhaGeneratorHelper helper) {
+	private static void configuraSumario(Planilha planilha, SpreadSheetGeneratorHelper helper) {
 		Sumario sumario = planilha.getSumario();
 		
 		if(sumario == null){
@@ -77,7 +77,7 @@ public class GeradorPlanilha {
 		);
 	}
 
-	private static void configuraCabecalho(PlanilhaGeneratorHelper helper, CabecalhoColunas cabecalhoColunas) {
+	private static void configuraCabecalho(SpreadSheetGeneratorHelper helper, CabecalhoColunas cabecalhoColunas) {
 		if(cabecalhoColunas == null){
 			return;
 		}

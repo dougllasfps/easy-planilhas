@@ -34,7 +34,7 @@ import org.dougllas.planilhas.util.ReflectionUtil;
  * @author dougllas.sousa
  * @since 17/06/2015
  */
-public class PlanilhaGeneratorHelper {
+public class SpreadSheetGeneratorHelper {
 	
 	private static final String DEFAULT_DATE_TIME_PATTERN = new String("dd/MM/yyyy HH:mm:ss");
 	
@@ -58,7 +58,7 @@ public class PlanilhaGeneratorHelper {
 	private SimpleDateFormat dateFormatter;
 	private String datePattern;
 	
-	private PlanilhaGeneratorHelper( HSSFWorkbook workbook) {
+	private SpreadSheetGeneratorHelper(HSSFWorkbook workbook) {
 		this.workbook = workbook;
 		this.rowCount = 0;
 		
@@ -70,8 +70,8 @@ public class PlanilhaGeneratorHelper {
 	 * @param firstSheetName
 	 * @return instancia com workbook e 1 folha (sheet)
 	 */
-	public static PlanilhaGeneratorHelper createPlanilha(String firstSheetName){
-		PlanilhaGeneratorHelper obj = new PlanilhaGeneratorHelper(new HSSFWorkbook());
+	public static SpreadSheetGeneratorHelper createPlanilha(String firstSheetName){
+		SpreadSheetGeneratorHelper obj = new SpreadSheetGeneratorHelper(new HSSFWorkbook());
 		obj.adicionaSheet(firstSheetName);
 		return obj;
 	}
@@ -80,7 +80,7 @@ public class PlanilhaGeneratorHelper {
 	 * @return instancia com workbook e 1 folha (sheet) com o nome default 'planilha1', 
 	 * que poder� ser alterado posteriormente.
 	 */
-	public static PlanilhaGeneratorHelper createPlanilha(){
+	public static SpreadSheetGeneratorHelper createPlanilha(){
 		return createPlanilha("Planilha1");
 	}
 	
