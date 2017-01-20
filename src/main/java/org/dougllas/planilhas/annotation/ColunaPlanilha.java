@@ -5,8 +5,7 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
-import org.dougllas.planilhas.CellTextAlignment;
-import org.dougllas.planilhas.ColumnHeaderTextAlignment;
+import org.dougllas.planilhas.format.Alignment;
 
 /**
  * @author dougllas.sousa
@@ -22,7 +21,7 @@ public @interface ColunaPlanilha {
 	
 	CellTextAlignment cellTextAlignment() default CellTextAlignment.LEFT;
 	
-	ColumnHeaderTextAlignment columnHeaderTextAlignment() default ColumnHeaderTextAlignment.LEFT;
+	Alignment columnHeaderTextAlignment() default Alignment.LEFT;
 	
 	int columnPosition() default -1;
 	

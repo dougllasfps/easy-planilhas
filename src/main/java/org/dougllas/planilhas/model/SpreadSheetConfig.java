@@ -3,7 +3,7 @@ package org.dougllas.planilhas.model;
 /**
  * Criado por dougllas.sousa em 13/01/2017.
  */
-public class SpreadSheetFormatter {
+public class SpreadSheetConfig {
 
     private boolean enableStickHeader;
     private boolean enableFilterOnColumns;
