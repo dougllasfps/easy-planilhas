@@ -30,8 +30,6 @@ public class ReflectionHelper {
 
             if(f.isAnnotationPresent(SheetColumn.class)){
                 SheetColumn annotation = f.getAnnotation(SheetColumn.class);
-                config.setCellTextAlignment(annotation.cellTextAlignment());
-                config.setColumnHeaderTextAlignment(annotation.columnHeaderTextAlignment());
                 config.setHeader(annotation.header());
                 config.setIndex(annotation.index());
                 config.setWidth(annotation.width());

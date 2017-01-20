@@ -22,10 +22,14 @@ public class ExcelRowMapperExtract {
 		List<Object[]> returnList = new ArrayList<Object[]>();
 		
 		for (Object object : list) {
-			Object[] obj = rowMapper.mapRow(object);
+			Object[] obj = extract(rowMapper, object);
 			returnList.add(obj);
 		}
 		
 		return returnList;
 	}
+
+    public static Object[] extract(final ExcelRowMapper rowMapper, Object object){
+        return rowMapper.mapRow(object);
+    }
 }

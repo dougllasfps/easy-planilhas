@@ -12,7 +12,7 @@ import java.util.Date;
 public class ModelClass {
 
     @SheetColumn(header = "Nome do Nego", width = 20, index = 2)
-    @Style(columnHeaderTextAlignment = Alignment.CENTER, cellTextAlignment = CellTextAlignment.CENTER)
+//    @Style(columnHeaderTextAlignment = Alignment.CENTER, cellTextAlignment = CellTextAlignment.CENTER)
     private String nome;
 
     @SheetColumn(header = "Idade do Nego", width = 10, index = 0)

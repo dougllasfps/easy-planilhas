@@ -19,7 +19,7 @@ public @interface ColunaPlanilha {
 	
 	int tamanho() default 10;
 	
-	CellTextAlignment cellTextAlignment() default CellTextAlignment.LEFT;
+	Alignment cellTextAlignment() default Alignment.LEFT;
 	
 	Alignment columnHeaderTextAlignment() default Alignment.LEFT;
 	

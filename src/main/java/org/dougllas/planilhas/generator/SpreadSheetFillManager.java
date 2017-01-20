@@ -1,8 +1,7 @@
 package org.dougllas.planilhas.generator;
 
 import org.dougllas.planilhas.datasource.SpreadSheetDataSource;
-import org.dougllas.planilhas.datasource.impl.AnnotationDataSource;
-import org.dougllas.planilhas.datasource.manager.AnnotationDataSourceManager;
+import org.dougllas.planilhas.datasource.SpreadSheetDataSourceManager;
 import org.dougllas.planilhas.model.Column;
 import org.dougllas.planilhas.model.Row;
 import org.dougllas.planilhas.model.SpreadSheet;
@@ -29,14 +28,15 @@ public class SpreadSheetFillManager<T> {
     }
 
     public SpreadSheet fill(SpreadSheet spreadSheet) {
-        AnnotationDataSourceManager manager = new AnnotationDataSourceManager();
+        SpreadSheetDataSourceManager manager = SpreadSheetDataSource.of(this.dataSource);
 
-        List<Column> columns = manager.populateColumns((AnnotationDataSource) this.dataSource);
-        List<Row> rows = manager.populateRows((AnnotationDataSource) this.dataSource);
+        List<Column> columns = manager.populateColumns(this.dataSource);
+        List<Row> rows = manager.populateRows(this.dataSource);
 
         spreadSheet.setColumns(columns);
         spreadSheet.setRows(rows);
 
         return spreadSheet;
     }
+
 }

@@ -9,7 +9,7 @@ public class AnnotationConfig {
 
     private String header;
     private int width;
-    private CellTextAlignment cellTextAlignment;
+    private Alignment cellTextAlignment;
     private Alignment columnHeaderTextAlignment;
     private int index;
     private String fieldName;
@@ -38,11 +38,11 @@ public class AnnotationConfig {
         this.width = width;
     }
 
-    public CellTextAlignment getCellTextAlignment() {
+    public Alignment getCellTextAlignment() {
         return cellTextAlignment;
     }
 
-    public void setCellTextAlignment(CellTextAlignment cellTextAlignment) {
+    public void setCellTextAlignment(Alignment cellTextAlignment) {
         this.cellTextAlignment = cellTextAlignment;
     }
 
