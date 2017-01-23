@@ -1,14 +1,18 @@
 package org.dougllas.planilhas.model;
 
+import org.dougllas.planilhas.Planilha;
 import org.dougllas.planilhas.datasource.SpreadSheetDataSource;
 import org.dougllas.planilhas.datasource.impl.AnnotationDataSource;
 import org.dougllas.planilhas.datasource.impl.RowMapperDataSource;
 import org.dougllas.planilhas.generator.SpreadSheetFillManager;
+import org.dougllas.planilhas.generator.SpreadSheetGenerator;
 import org.dougllas.planilhas.mapper.ExcelRowMapper;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -20,9 +24,13 @@ public class SSheetCreationTest {
 
     private ExcelRowMapper<ModelClass> rowMapper;
     private List<ModelClass> source;
+    private FileService fileService;
 
     @Before
     public void setUp(){
+
+        fileService = new FileService();
+
         ModelClass model = new ModelClass();
         model.setData(new Date());
         model.setIdade(10);
@@ -53,11 +61,15 @@ public class SSheetCreationTest {
     }
 
     @Test
-    public void annotationTest(){
-
+    public void annotationTest() throws IOException {
         SpreadSheetDataSource<ModelClass> dataSource = new AnnotationDataSource<>(source);
         SpreadSheetFillManager<ModelClass> fillManager = new SpreadSheetFillManager<>(dataSource);
         SpreadSheet sp = fillManager.fill( new SpreadSheet() );
+
+        SpreadSheetGenerator generator = new SpreadSheetGenerator(sp);
+        byte[] bytes = generator.exportToBytes();
+
+        fileService.save("generated.xls", bytes);
 
         Assert.assertEquals(sp.getColumns().size(), 3);
         Assert.assertEquals(sp.getRows().size(), 2);

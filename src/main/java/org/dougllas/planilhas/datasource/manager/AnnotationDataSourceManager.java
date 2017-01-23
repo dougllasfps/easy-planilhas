@@ -24,7 +24,8 @@ public class AnnotationDataSourceManager implements SpreadSheetDataSourceManager
         Collection source = dataSource.getSource();
 
         List<Column> columns = populateColumns(dataSource);
-        int fieldsInRow = columns.size();
+        RowColumnOrganization.sortColumnsByIndex(columns);
+        int fieldsInRow = RowColumnOrganization.getHigherIndex(columns) + 1;
 
         List<Row> list = new ArrayList<>();
 
@@ -34,8 +35,7 @@ public class AnnotationDataSourceManager implements SpreadSheetDataSourceManager
 
             Object[] tuple = new Object[fieldsInRow];
 
-            for(int x = 0; x < fieldsInRow ; x++) {
-                Column column = columns.get(x);
+            for(Column column : columns) {
                 String valueBinding = column.getValueBinding();
 
                 Field field = ReflectionUtils.findField(o.getClass(), valueBinding);
@@ -50,7 +50,8 @@ public class AnnotationDataSourceManager implements SpreadSheetDataSourceManager
                     throw new RuntimeException(e);
                 }
 
-                tuple[x] = value;
+                int columnIndex = column.getIndex();
+                tuple[columnIndex] = value;
             }
 
             Row row = new Row();
@@ -78,8 +79,6 @@ public class AnnotationDataSourceManager implements SpreadSheetDataSourceManager
             c.setValueBinding(a.getFieldName());
             list.add(c);
         }
-
-        RowColumnOrganization.sortColumnsByIndex(list);
 
         return  list;
     }

@@ -18,7 +18,7 @@ public class ModelClass {
     @SheetColumn(header = "Idade do Nego", width = 10, index = 0)
     private Integer idade;
 
-    @SheetColumn(header = "Data de nasc. do Nego", width = 40, index = 1)
+    @SheetColumn(header = "Data de nasc. do Nego", width = 40, index = 10)
     private Date data;
 
     public String getNome() {

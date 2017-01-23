@@ -5,6 +5,7 @@ import org.dougllas.planilhas.generator.helper.SpreadSheetGeneratorHelper;
 import org.dougllas.planilhas.model.Column;
 import org.dougllas.planilhas.model.Row;
 import org.dougllas.planilhas.model.SpreadSheet;
+import org.dougllas.planilhas.util.RowColumnOrganization;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +17,8 @@ public class SpreadSheetGenerator {
 
     private SpreadSheet sheet;
     private SpreadSheetGeneratorHelper helper;
+    private boolean rowsEncoded;
+    private boolean columnsEncoded;
 
     public SpreadSheetGenerator(SpreadSheet sheet){
         this.sheet = sheet;
@@ -28,35 +31,66 @@ public class SpreadSheetGenerator {
     }
 
     public HSSFWorkbook generateWorkBook(){
-        encodeColumns();
-        encodeRows();
+
+        if(!columnsEncoded) {
+            encodeColumns();
+        }
+
+        if(!rowsEncoded) {
+            encodeRows();
+        }
+
         return helper.getWorkbook();
     }
 
     public byte[] exportToBytes() throws IOException{
+
+        if(!columnsEncoded) {
+            encodeColumns();
+        }
+
+        if(!rowsEncoded) {
+            encodeRows();
+        }
+
         return helper.exportToBytes();
     }
 
     private void encodeColumns(){
         List<Column> columns = this.sheet.getColumns();
+        RowColumnOrganization.sortColumnsByIndex(columns);
         String[] header = extractHeader(columns);
         helper.adicionaCabecalho(header);
+        columnsEncoded = true;
     }
 
     private void encodeRows(){
         List<Row> rows = this.sheet.getRows();
 
+        RowColumnOrganization.sortRowsByIndex(rows);
+
         for(Row row : rows){
             helper.adicionaLinha(row.getIndex(), row.getData());
         }
+
+        rowsEncoded = true;
     }
 
     private String[] extractHeader(List<Column> columns){
-        int size = columns.size();
+        int size = RowColumnOrganization.getHigherIndex(columns) + 1;
+
         String[] header = new String[size];
 
-        for (int x = 0 ; x < size ; x++) {
-            header[x] = columns.get(x).getHeader();
+        for (Column column : columns) {
+            header[column.getIndex()] = column.getHeader();
+        }
+
+        for(int x = 0 ; x < size ; x++){
+            String h = header[x];
+
+            if(h == null){
+                header[x] = "";
+            }
         }
 
         return header;
