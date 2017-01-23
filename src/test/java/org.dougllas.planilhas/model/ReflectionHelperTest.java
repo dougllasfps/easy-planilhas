@@ -1,5 +1,6 @@
 package org.dougllas.planilhas.model;
 
+import org.dougllas.planilhas.ModelClass;
 import org.dougllas.planilhas.annotation.AnnotationConfig;
 import org.dougllas.planilhas.reflection.ReflectionHelper;
 import org.junit.Assert;

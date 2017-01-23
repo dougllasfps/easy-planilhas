@@ -1,6 +1,6 @@
 package org.dougllas.planilhas.model;
 
-import org.dougllas.planilhas.Planilha;
+import org.dougllas.planilhas.ModelClass;
 import org.dougllas.planilhas.datasource.SpreadSheetDataSource;
 import org.dougllas.planilhas.datasource.impl.AnnotationDataSource;
 import org.dougllas.planilhas.datasource.impl.RowMapperDataSource;
@@ -12,7 +12,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;

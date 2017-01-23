@@ -50,10 +50,10 @@ public class SpreadSheetGeneratorHelper {
 	private Integer columnsHeaderRowNumber;
 	private Integer[] sizes;
 	
-	private boolean adicionarFiltroColunasCabecalho;
-	private boolean protegerPlanilha;
-	private boolean adicionarEstiloPadraoCabecalho;
-	private boolean congelarCabecalho;
+	private boolean addFilterColumnHeader;
+	private boolean protectSheet;
+	private boolean addDefaultStyleColumnHeader;
+	private boolean addStickHeader;
 	
 	private SimpleDateFormat dateFormatter;
 	private String datePattern;
@@ -70,9 +70,9 @@ public class SpreadSheetGeneratorHelper {
 	 * @param firstSheetName
 	 * @return instancia com workbook e 1 folha (sheet)
 	 */
-	public static SpreadSheetGeneratorHelper createPlanilha(String firstSheetName){
+	public static SpreadSheetGeneratorHelper createSheet(String firstSheetName){
 		SpreadSheetGeneratorHelper obj = new SpreadSheetGeneratorHelper(new HSSFWorkbook());
-		obj.adicionaSheet(firstSheetName);
+		obj.addSheet(firstSheetName);
 		return obj;
 	}
 	
@@ -80,15 +80,15 @@ public class SpreadSheetGeneratorHelper {
 	 * @return instancia com workbook e 1 folha (sheet) com o nome default 'planilha1', 
 	 * que poder� ser alterado posteriormente.
 	 */
-	public static SpreadSheetGeneratorHelper createPlanilha(){
-		return createPlanilha("Planilha1");
+	public static SpreadSheetGeneratorHelper createSheet(){
+		return createSheet("Planilha1");
 	}
 	
 	/**
 	 * adiciona mais uma planilha (folha/sheet) com o nome especificado ao workbook 
 	 * @param name
 	 */
-	public void adicionaSheet(String name){
+	public void addSheet(String name){
 		if(this.sheetList == null){
 			this.sheetList = new ArrayList<HSSFSheet>();
 		}
@@ -113,19 +113,19 @@ public class SpreadSheetGeneratorHelper {
 	 * adiciona uma celula no index especificado na linha corrente 
 	 * caso a linha nao exista, esta ser� criada.
 	 */
-	public void adicionaCelulaBranco(int index){
+	public void addBlankCell(int index){
 		
 		if(getCurrentLine() == null){
-			adicionaLinhaEmBranco();
+			addBlankRow();
 		}
-		adicionaCelulaBranco(getCurrentLine().getRowNum(), index);
+		addBlankCell(getCurrentLine().getRowNum(), index);
 	}
 
 	/**
 	 * @param index
 	 * adiciona uma celula no index especificado na linha passada 
 	 */
-	public void adicionaCelulaBranco(int rowIndex, int index){
+	public void addBlankCell(int rowIndex, int index){
 		HSSFRow row = getCurrentSheet().getRow(rowIndex);
 		if(row == null){
 			throw new IllegalArgumentException("Linha passada n�o existe");
@@ -138,12 +138,12 @@ public class SpreadSheetGeneratorHelper {
 	 * @param value
 	 * adiciona uma celula na linha corrente no index passado
 	 */
-	public void adicionaCelula(int index, Object value){
+	public void addCell(int index, Object value){
 		if(getCurrentLine() == null){
-			adicionaLinhaEmBranco();
+			addBlankRow();
 		}
 		int rowIndex = getCurrentLine().getRowNum();
-		adicionaCelula(rowIndex, index, value);
+		addCell(rowIndex, index, value);
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class SpreadSheetGeneratorHelper {
 	 *  valor que ir� receber a c�lula
 	 * adiciona celula na linha especificada
 	 */
-	public void adicionaCelula(int rowIndex, int index, Object value){
+	public void addCell(int rowIndex, int index, Object value){
 		HSSFRow row = getCurrentSheet().getRow(rowIndex);
 		HSSFCell celula = null;
 		
@@ -164,7 +164,7 @@ public class SpreadSheetGeneratorHelper {
 			value = bigDValue.doubleValue();
 			celula = row.createCell(index);
 			celula.setCellValue((Double) value);
-			adicionaCurrencyStyle(celula);
+			addCurrencyStyle(celula);
 		}else if(value instanceof Date){
 			Date data = (Date) value;
 			celula = row.createCell(index);
@@ -186,8 +186,8 @@ public class SpreadSheetGeneratorHelper {
 	 * @param objects
 	 * adiciona o cabecalho das tabelas.
 	 */
-	public void adicionaCabecalho( String[] columnHeaderNames ){
-		adicionaCabecalhoColunas( columnHeaderNames, null);
+	public void addColumnHeader(String[] columnHeaderNames ){
+		addColumnHeader( columnHeaderNames, null);
 	}
 	
 	/**
@@ -195,9 +195,9 @@ public class SpreadSheetGeneratorHelper {
 	 * adiciona o cabecalho das tabelas.
 	 * guarda a referencia para a linha onde encontra-se o cabecalho
 	 */
-	public void adicionaCabecalhoColunas( String[] columnHeaderNames, Integer[] columnSizes ){
+	public void addColumnHeader(String[] columnHeaderNames, Integer[] columnSizes ){
 		this.columnsHeaderRowNumber = rowCount.intValue();
-		adicionaLinha((Object[]) columnHeaderNames);
+		addRow((Object[]) columnHeaderNames);
 		
 		sizes = columnSizes;
 		
@@ -210,7 +210,7 @@ public class SpreadSheetGeneratorHelper {
 	 * adiciona uma linha em branco, 
 	 * a linha corrente passa a ser esta.
 	 */
-	public void adicionaLinhaEmBranco(int num) throws IllegalArgumentException{
+	public void addBlankRow(int num) throws IllegalArgumentException{
 		for(int x = 0 ; x < num ; x++){
 			currentLine = getCurrentSheet().createRow(rowCount);
 			rowCount ++;
@@ -221,8 +221,8 @@ public class SpreadSheetGeneratorHelper {
 	 * adiciona a quantidade de linhas em branco passada por parametro, 
 	 * a linha corrente passa a ser esta.
 	 */
-	public void adicionaLinhaEmBranco() throws IllegalArgumentException{
-		adicionaLinhaEmBranco(1);
+	public void addBlankRow() throws IllegalArgumentException{
+		addBlankRow(1);
 	}
 	
 	/**
@@ -230,15 +230,15 @@ public class SpreadSheetGeneratorHelper {
 	 * adiciona a lista de objetos passado na linha corrente,
 	 * caso esta nao exista, ser� criada.
 	 */
-	public void adicionaLinha( Object...objects ){
-		adicionaLinha(rowCount, objects);
+	public void addRow(Object...objects ){
+		addRow(rowCount, objects);
 	}
 	
-	public void adicionaLinha(int rowIndex, Object...objects ){
+	public void addRow(int rowIndex, Object...objects ){
 		currentLine = getCurrentSheet().createRow(rowIndex);
 		for (int i = 0; i < objects.length; i++) {
 			Object obj = objects[i];
-			adicionaCelula(rowIndex, i, obj);
+			addCell(rowIndex, i, obj);
 		}
 		rowCount ++;
 	}
@@ -279,7 +279,7 @@ public class SpreadSheetGeneratorHelper {
 			List<Object[]> objects = ReflectionUtil.extractValuesWithAnnotation(list, ColunaPlanilha.class);
 			
 			for (Object[] obj : objects) {
-				adicionaLinha(obj);
+				addRow(obj);
 			}
 			
 		} catch (Exception e) {
@@ -300,7 +300,7 @@ public class SpreadSheetGeneratorHelper {
             ExcelRowMapperExtract extract = new ExcelRowMapperExtract(rowMapper);
             List<Object[]> objects = extract.extract(list);
             for (Object[] obj : objects) {
-                adicionaLinha(obj);
+                addRow(obj);
             }
         }else{
             addList(list);
@@ -310,28 +310,28 @@ public class SpreadSheetGeneratorHelper {
 	/**
 	 * estiliza o cabe�alho das colunas
 	 */
-	private void adicionaEstiloPadraoCabecalho() {
-		CellStyle estilo = getTitleStyle();
+	private void addDefaultStyleColumnHeader() {
+		CellStyle style = getTitleStyle();
 		
 		int lastColumnIndex = getColumnsHeaderLine().getLastCellNum();
 		
 		for(int x = 0 ; x < lastColumnIndex; x++){
-			getColumnsHeaderLine().getCell(x).setCellStyle(estilo);
+			getColumnsHeaderLine().getCell(x).setCellStyle(style);
 		}
 	}
 
 	private CellStyle getTitleStyle() {
-		CellStyle estilo = workbook.createCellStyle();
-		estilo.setAlignment(HSSFCellStyle.ALIGN_CENTER);
-		estilo.setFillForegroundColor(IndexedColors.WHITE.index);  
-		estilo.setFillBackgroundColor(IndexedColors.GREY_40_PERCENT.index);
-		estilo.setVerticalAlignment(HSSFCellStyle.VERTICAL_BOTTOM);  
+		CellStyle style = workbook.createCellStyle();
+		style.setAlignment(HSSFCellStyle.ALIGN_CENTER);
+		style.setFillForegroundColor(IndexedColors.WHITE.index);
+		style.setFillBackgroundColor(IndexedColors.GREY_40_PERCENT.index);
+		style.setVerticalAlignment(HSSFCellStyle.VERTICAL_BOTTOM);
 		
 		Font boldFont = workbook.createFont();
 		boldFont.setBoldweight(Font.BOLDWEIGHT_BOLD);
 		boldFont.setFontHeight((short) 210);
-		estilo.setFont(boldFont);
-		return estilo;
+		style.setFont(boldFont);
+		return style;
 	}
 	
 	/**
@@ -341,20 +341,20 @@ public class SpreadSheetGeneratorHelper {
 	 * o intervalo de linhas/colunas onde o filtro ir� operar <br>
 	 *
 	 */
-	public void adicionaFiltroColunas(String cellRange){
+	public void addColumnFilter(String cellRange){
 		CellRangeAddress filterCellRange = CellRangeAddress.valueOf(cellRange);
 		getCurrentSheet().setAutoFilter(filterCellRange);
 	}
 	
-	private void adicionaFiltroColunasCabecalho(){
+	private void addColumnFilterColumnHeader(){
 		int lastCellNum = getColumnsHeaderLine().getLastCellNum() - 1;
-		adicionaFiltroColunas(lastCellNum);
+		addColumnFilter(lastCellNum);
 	}
 	
-	public void adicionaFiltroColunas(int lastColumnFilterIndex){
+	public void addColumnFilter(int lastColumnFilterIndex){
 		String lastColumnName = ColumnName.findLetterByIndex(lastColumnFilterIndex);
 		String cellRange = "A" + (getColumnsHeaderRowNumber() + 1) + ":" + lastColumnName + rowCount;
-		adicionaFiltroColunas(cellRange);
+		addColumnFilter(cellRange);
 	}
 	
 	/**
@@ -374,7 +374,7 @@ public class SpreadSheetGeneratorHelper {
 	 * @param keywords
 	 * Palavras Chave
 	 */
-	public void adicionaInformacaoAoSumario(String appName, Date date, String author, String revisionNumber, String subject, String title, String keywords){
+	public void addSummaryInfo(String appName, Date date, String author, String revisionNumber, String subject, String title, String keywords){
 		this.workbook.createInformationProperties();
 		SummaryInformation si = workbook.getSummaryInformation();
 		si.setApplicationName(appName);
@@ -392,7 +392,7 @@ public class SpreadSheetGeneratorHelper {
 	 * @throws IOException
 	 */
 	public byte[] exportToBytes() throws IOException{
-		finalizarPlanilha();
+		concludeSSheet();
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		this.workbook.write(baos);
 		return baos.toByteArray();
@@ -416,7 +416,7 @@ public class SpreadSheetGeneratorHelper {
 		sheet.protectSheet(password);
 	}
 	
-	private void adicionaCurrencyStyle(HSSFCell cell){
+	private void addCurrencyStyle(HSSFCell cell){
 		if(currencyCellFormatStyle == null){
 			currencyCellFormatStyle = createCurrencyStyle();
 		}
@@ -430,35 +430,35 @@ public class SpreadSheetGeneratorHelper {
 		return currencyCellFormatStyle;
 	}
 
-	private void congelarCabecalho(){
+	private void doStickHeader(){
 		int index = getSheetList().indexOf(getCurrentSheet());
-		congelarLinhas(index, getColumnsHeaderRowNumber() + 1);
+		doStickHeader(index, getColumnsHeaderRowNumber() + 1);
 	}
 	
-	public void congelarLinhas(Integer sheetIndex, Integer lastRowIndex){
+	public void doStickHeader(Integer sheetIndex, Integer lastRowIndex){
 		HSSFSheet sheet = getSheetList().get(sheetIndex);
 		if(sheet != null ){
 			sheet.createFreezePane(0, lastRowIndex);
 		}
 	}
 	
-	public void mesclarCelulas(int firstRow, int lastRow , int firstColumn,   int lastColumn ){
+	public void mergeCells(int firstRow, int lastRow , int firstColumn, int lastColumn ){
 		CellRangeAddress cellRange = new CellRangeAddress(firstRow, lastRow, firstColumn, lastColumn);
 		getCurrentSheet().addMergedRegion( cellRange  );
 	}
 	
-	private void finalizarPlanilha(){
-		if(isAdicionarFiltroColunasCabecalho()){
-			adicionaFiltroColunasCabecalho();
+	private void concludeSSheet(){
+		if(isAddFilterColumnHeader()){
+			addColumnFilterColumnHeader();
 		}
-		if(isProtegerPlanilha()){
+		if(isProtectSheet()){
 			protectCurrentSheet();
 		}
-		if(isAdicionarEstiloPadraoCabecalho()){
-			adicionaEstiloPadraoCabecalho();
+		if(isAddDefaultStyleColumnHeader()){
+			addDefaultStyleColumnHeader();
 		}
-		if(isCongelarCabecalho()){
-			congelarCabecalho();
+		if(isAddStickHeader()){
+			doStickHeader();
 		}
 	}
 	
@@ -513,37 +513,37 @@ public class SpreadSheetGeneratorHelper {
 		return columnsHeaderRowNumber;
 	}
 	
-	public boolean isAdicionarFiltroColunasCabecalho() {
-		return adicionarFiltroColunasCabecalho;
+	public boolean isAddFilterColumnHeader() {
+		return addFilterColumnHeader;
 	}
 
-	public void setAdicionarFiltroColunasCabecalho(boolean addFilterToHeaderColumns) {
-		this.adicionarFiltroColunasCabecalho = addFilterToHeaderColumns;
+	public void setAddFilterColumnHeader(boolean addFilterToHeaderColumns) {
+		this.addFilterColumnHeader = addFilterToHeaderColumns;
 	}
 
-	public boolean isProtegerPlanilha() {
-		return protegerPlanilha;
+	public boolean isProtectSheet() {
+		return protectSheet;
 	}
 
-	public void setProtegerPlanilha(boolean protegerPlanilha) {
-		this.protegerPlanilha = protegerPlanilha;
+	public void setProtectSheet(boolean protectSheet) {
+		this.protectSheet = protectSheet;
 	}
 
-	public boolean isAdicionarEstiloPadraoCabecalho() {
-		return adicionarEstiloPadraoCabecalho;
+	public boolean isAddDefaultStyleColumnHeader() {
+		return addDefaultStyleColumnHeader;
 	}
 
-	public void setAdicionarEstiloPadraoCabecalho(
+	public void setAddDefaultStyleColumnHeader(
 			boolean adicionaEstiloPadraoCabecalho) {
-		this.adicionarEstiloPadraoCabecalho = adicionaEstiloPadraoCabecalho;
+		this.addDefaultStyleColumnHeader = adicionaEstiloPadraoCabecalho;
 	}
 
-	public boolean isCongelarCabecalho() {
-		return congelarCabecalho;
+	public boolean isAddStickHeader() {
+		return addStickHeader;
 	}
 
-	public void setCongelarCabecalho(boolean congelarCabecalho) {
-		this.congelarCabecalho = congelarCabecalho;
+	public void setAddStickHeader(boolean addStickHeader) {
+		this.addStickHeader = addStickHeader;
 	}
 
 	public HSSFCellStyle getCurrencyCellFormatStyle() {

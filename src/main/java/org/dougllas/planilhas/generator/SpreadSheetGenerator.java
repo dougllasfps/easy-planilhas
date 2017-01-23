@@ -27,7 +27,7 @@ public class SpreadSheetGenerator {
             throw new IllegalArgumentException("Sheet can't be null!");
         }
 
-        helper = SpreadSheetGeneratorHelper.createPlanilha(sheet.getDescription());
+        helper = SpreadSheetGeneratorHelper.createSheet(sheet.getDescription());
     }
 
     public HSSFWorkbook generateWorkBook(){
@@ -60,7 +60,7 @@ public class SpreadSheetGenerator {
         List<Column> columns = this.sheet.getColumns();
         RowColumnOrganization.sortColumnsByIndex(columns);
         String[] header = extractHeader(columns);
-        helper.adicionaCabecalho(header);
+        helper.addColumnHeader(header);
         columnsEncoded = true;
     }
 
@@ -70,7 +70,7 @@ public class SpreadSheetGenerator {
         RowColumnOrganization.sortRowsByIndex(rows);
 
         for(Row row : rows){
-            helper.adicionaLinha(row.getIndex(), row.getData());
+            helper.addRow(row.getData());
         }
 
         rowsEncoded = true;

@@ -29,7 +29,7 @@ public class GeradorPlanilha {
             throw new IllegalArgumentException("Planilha vazia.");
         }
 
-		SpreadSheetGeneratorHelper helper = SpreadSheetGeneratorHelper.createPlanilha(planilha.getName());
+		SpreadSheetGeneratorHelper helper = SpreadSheetGeneratorHelper.createSheet(planilha.getName());
 		CabecalhoColunas cabecalhoColunas = planilha.getCabecalhoColunas();
 		
 		configurarTitulo(planilha, helper);
@@ -44,16 +44,16 @@ public class GeradorPlanilha {
             helper.addList(planilha.getConteudo(), mapper);
         }
 
-		helper.setProtegerPlanilha(planilha.isReadOnly());
+		helper.setProtectSheet(planilha.isReadOnly());
 		
 		return helper;
 	}
 
 	private static void configurarTitulo(Planilha planilha, SpreadSheetGeneratorHelper helper) {
 		if(planilha.getTitulo() != null){
-			helper.adicionaLinha(planilha.getTitulo());
-			helper.adicionaLinhaEmBranco(2);
-			helper.mesclarCelulas(0, 1, 0, planilha.getCabecalhoColunas().getTitulos().size() - 1);
+			helper.addRow(planilha.getTitulo());
+			helper.addBlankRow(2);
+			helper.mergeCells(0, 1, 0, planilha.getCabecalhoColunas().getTitulos().size() - 1);
 		}
 	}
 
@@ -66,7 +66,7 @@ public class GeradorPlanilha {
 		
 		String revisao = String.valueOf(sumario.getRevisao() == null ? 0 : sumario.getRevisao());
 	
-		helper.adicionaInformacaoAoSumario(
+		helper.addSummaryInfo(
 				sumario.getAplicacao(), 
 				sumario.getData(), 
 				sumario.getAutor(), 
@@ -86,7 +86,7 @@ public class GeradorPlanilha {
 
 		if(titulos != null){
 			String[] cabecalho = titulos.toArray(new String[titulos.size()]);
-			helper.adicionaCabecalho(cabecalho);
+			helper.addColumnHeader(cabecalho);
 		}
 		
 		List<Integer> sizes = cabecalhoColunas.getSizes();
@@ -96,8 +96,8 @@ public class GeradorPlanilha {
 			helper.setColumnsSizes(columnSizes);
 		}
 		
-		helper.setAdicionarEstiloPadraoCabecalho(cabecalhoColunas.isAdicionarEstiloPadrao());
-		helper.setAdicionarFiltroColunasCabecalho(cabecalhoColunas.isAdicionarFiltroColunas());
-		helper.setCongelarCabecalho(cabecalhoColunas.isHabilitarStickHeader());
+		helper.setAddDefaultStyleColumnHeader(cabecalhoColunas.isAdicionarEstiloPadrao());
+		helper.setAddFilterColumnHeader(cabecalhoColunas.isAdicionarFiltroColunas());
+		helper.setAddStickHeader(cabecalhoColunas.isHabilitarStickHeader());
 	}
 }
