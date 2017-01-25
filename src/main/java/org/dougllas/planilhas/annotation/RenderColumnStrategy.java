@@ -12,7 +12,7 @@ import java.lang.annotation.Target;
  */
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Strategy {
+public @interface RenderColumnStrategy {
 
-    Class<? extends PrintColumnStrategy> strategy();
+    Class<? extends PrintColumnStrategy> value();
 }

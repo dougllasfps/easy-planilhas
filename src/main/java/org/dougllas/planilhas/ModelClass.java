@@ -1,9 +1,8 @@
 package org.dougllas.planilhas;
 
-import org.dougllas.planilhas.RemoveNullIndexStrategy;
 import org.dougllas.planilhas.annotation.IndexConfiguration;
 import org.dougllas.planilhas.annotation.SheetColumn;
-import org.dougllas.planilhas.annotation.Strategy;
+import org.dougllas.planilhas.annotation.RenderColumnStrategy;
 import org.dougllas.planilhas.format.Order;
 
 import java.util.Date;
@@ -14,7 +13,7 @@ import java.util.Date;
 
 
 @IndexConfiguration(order = Order.ASC)
-@Strategy(strategy = RemoveNullIndexStrategy.class)
+@RenderColumnStrategy(RemoveNullIndexStrategy.class)
 public class ModelClass {
 
     @SheetColumn(header = "Idade do Nego", width = 10, index = 0)
