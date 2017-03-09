@@ -9,6 +9,7 @@ import org.dougllas.planilhas.generator.SpreadSheetGenerator;
 import org.dougllas.planilhas.mapper.ExcelRowMapper;
 import org.junit.Assert;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class SSheetCreationTest {
     }
 
     @Test
+    @Ignore
     public void annotationTest() throws IOException {
         SpreadSheetDataSource<ModelClass> dataSource = new AnnotationDataSource<>(source);
         SpreadSheetFillManager<ModelClass> fillManager = new SpreadSheetFillManager<>(dataSource);
@@ -75,12 +77,17 @@ public class SSheetCreationTest {
     }
 
     @Test
-    public void mapperTest(){
+    public void mapperTest() throws IOException{
 
         SpreadSheetDataSource<ModelClass> dataSource = new RowMapperDataSource<>(source, rowMapper);
 
         SpreadSheetFillManager<ModelClass> fillManager = new SpreadSheetFillManager<>(dataSource);
         SpreadSheet sp = fillManager.fill( new SpreadSheet() );
+
+        SpreadSheetGenerator generator = new SpreadSheetGenerator(sp);
+        byte[] bytes = generator.exportToBytes();
+
+        fileService.save("generated.xls", bytes);
 
         Assert.assertEquals(sp.getColumns().size(), 3);
         Assert.assertEquals(sp.getRows().size(), 2);
