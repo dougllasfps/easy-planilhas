@@ -95,4 +95,8 @@ public class SpreadSheetGenerator {
 
         return header;
     }
+
+    public SpreadSheetGeneratorHelper getHelper() {
+        return helper;
+    }
 }
