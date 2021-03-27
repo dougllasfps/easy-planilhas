@@ -1,19 +1,11 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>org.dougllas</groupId>
-	<artifactId>planilhas</artifactId>
+	<groupId>io.github.dougllasfps</groupId>
+	<artifactId>easy-planilhas</artifactId>
 	<name>Planilhas</name>
 	<version>1.0</version>
 
-	<distributionManagement>
-		<repository>
-	        <id>sedsrv0017</id>
-	        <name>sedsrv0017-releases</name>
-	        <url>http://172.31.0.17:8080/artifactory/libs-release-local</url>
-	    </repository>
-	</distributionManagement>
-	
 	<dependencies>
 
 		<dependency>
@@ -77,19 +69,6 @@
 			</plugin>
 		</plugins>
 	</build>
-	
-	<repositories>
-		<repository>
-			<id>central</id>
-			<url>http://mvnrepository.seduc.ce.gov.br/artifactory/libs-release</url>
-			<snapshots>
-				<enabled>false</enabled>
-			</snapshots>
-			<releases>
-				<updatePolicy>always</updatePolicy>
-			</releases>
-		</repository>
-	</repositories>
-	
+
 
 </project>
